@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 343fcd3d8b3f2624b9d05cd9e1075e5f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - GameOverUI: {instanceID: 0}
+  - GameWinUI: {instanceID: 0}
+  - currentText: {instanceID: 0}
+  - BackgroundSound: {instanceID: 0}
+  - boo: {fileID: 8300000, guid: a75c4b29f5705804bba93e9889d6543c, type: 3}
+  - Scream: {instanceID: 0}
+  - OhNo: {instanceID: 0}
+  - CollectSound: {instanceID: 0}
+  - Fx: {instanceID: 0}
+  - meshSurface: {instanceID: 0}
+  - TotalCoin: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
