@@ -5,12 +5,13 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 using SgLib;
+using Gley.AllPlatformsSave;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     int CurrentLevel;
 
-    public GameObject GameOverUI, GameWinUI;
+    public GameObject GameOverUI, GameWinUI, adsBtn;
     public bool finished;
     public Text currentText;
     public GameObject[] Level;
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
     public NavMeshSurface meshSurface;
     public Text TotalCoin;
     int TotalEnemy, EnemyLeft;
+    [HideInInspector] public int coinLevel;
+    bool rewardDone = false;
     public void Awake()
     {
         if (instance == null)
@@ -36,7 +39,14 @@ public class GameManager : MonoBehaviour
     {
         TotalEnemy = GameObject.FindGameObjectsWithTag("Hunter").Length;
         meshSurface.BuildNavMesh();
+        Invoke("ShowBanner", 1f);
     }
+
+    void ShowBanner()
+    {
+        AdsManager.Instance.ShowBanner();
+    }
+    
 
     
     void Update()
@@ -46,7 +56,17 @@ public class GameManager : MonoBehaviour
 
             GameWin();
         }
+
         TotalCoin.text = ""+(CoinManager.Instance.Coins);
+
+        if (AdsManager.Instance.RewardAvailable() && !rewardDone)
+        {
+            adsBtn.SetActive(true);
+        }
+        else
+        {
+            adsBtn.SetActive(false);
+        }
 
     }
 
@@ -77,15 +97,34 @@ public class GameManager : MonoBehaviour
 
 
     public void Restart() {
-        SceneManager.LoadScene("Game");
+        AdsManager.Instance.ShowInterstitial(GoToRestart);
+        
     }
 
+
+    void GoToRestart()
+    {
+        SceneManager.LoadScene("Game");
+    }
     public void Menu()
     {
         SceneManager.LoadScene("Menu");
+        AdsManager.Instance.HideBanner();
     }
 
-   
+    public void DoubleRewardBtn()
+    {
+        AdsManager.Instance.RewardVideo(CompleteMethod);
+    }
+
+    private void CompleteMethod(bool completed)
+    {
+        if (completed)
+        {
+            CoinManager.Instance.AddCoins(coinLevel);
+            rewardDone = true;
+        }
+    }
 
 
     public void spooked() {

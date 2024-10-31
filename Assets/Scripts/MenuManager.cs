@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using SgLib;
+using Gley.AllPlatformsSave;
 public class MenuManager : MonoBehaviour {
 
 
@@ -48,9 +49,10 @@ public class MenuManager : MonoBehaviour {
 
     public void Restart()
     {
-
         SceneManager.LoadScene("Game");
+        
     }
+
 
     public void Home()
     {
@@ -59,8 +61,17 @@ public class MenuManager : MonoBehaviour {
     }
     public void Shop()
     {
-        SceneManager.LoadScene("Shop");
+        if(AdsManager.Instance.IntersialAvailable())
+        AdsManager.Instance.ShowInterstitial(GoToShop);
+       else
+            GoToShop();
+    }
 
+
+
+    void GoToShop()
+    {
+        SceneManager.LoadScene("Shop");
     }
 
     public void ShareClick()

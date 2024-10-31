@@ -105,6 +105,7 @@ public class PlayerControl : MonoBehaviour
         {
 
             CoinManager.Instance.AddCoins(10);
+            GameManager.instance.coinLevel += 10;
             GameManager.instance.CollectCoin();
             Destroy(other.gameObject);
         }
